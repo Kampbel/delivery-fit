@@ -35,6 +35,8 @@ export function Navbar() {
     return user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0];
   };
 
+  const isAdmin = user?.email ? (process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',') || []).includes(user.email) : false;
+
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,6 +57,11 @@ export function Navbar() {
             <Link href="/tracking" className="text-sm font-medium hover:text-primary transition-colors">
               Seguimiento
             </Link>
+            {isAdmin && (
+              <Link href="/admin" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors flex items-center gap-1">
+                Panel Admin
+              </Link>
+            )}
           </div>
 
           {/* Actions */}
@@ -121,6 +128,15 @@ export function Navbar() {
               >
                 Seguimiento
               </Link>
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-primary hover:bg-secondary transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Panel Admin
+                </Link>
+              )}
               
               {user ? (
                 <>
