@@ -29,6 +29,15 @@ function TrackingContent() {
 
   const mapCenter = useMemo(() => ({ lat: -18.0146, lng: -70.2536 }), []); // Tacna, Peru
 
+  const updateStep = (status: string) => {
+    const step = TRACKING_STEPS.find(s => s.statusMatch === status);
+    if (step) {
+      setCurrentStep(step.id);
+    } else if (status === "Entregado") {
+      setCurrentStep(4);
+    }
+  };
+
   useEffect(() => {
     if (!orderId) {
       setLoading(false);
@@ -69,14 +78,6 @@ function TrackingContent() {
     };
   }, [orderId]);
 
-  const updateStep = (status: string) => {
-    const step = TRACKING_STEPS.find(s => s.statusMatch === status);
-    if (step) {
-      setCurrentStep(step.id);
-    } else if (status === "Entregado") {
-      setCurrentStep(4);
-    }
-  };
 
   if (loading) {
     return (
