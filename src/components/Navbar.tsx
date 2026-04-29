@@ -11,6 +11,7 @@ export function Navbar() {
   const { totalItems } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   useEffect(() => {
     // Check active session
@@ -57,27 +58,50 @@ export function Navbar() {
             <Link href="/tracking" className="text-sm font-medium hover:text-primary transition-colors">
               Seguimiento
             </Link>
-            {isAdmin && (
-              <Link href="/admin" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors flex items-center gap-1">
-                Panel Admin
-              </Link>
-            )}
           </div>
 
           {/* Actions */}
           <div className="flex items-center gap-4">
             {user ? (
-              <div className="hidden sm:flex items-center gap-4">
-                <span className="text-sm font-medium text-muted-foreground">
-                  Hola, <span className="font-bold text-foreground">{getUserName()}</span>
-                </span>
+              <div className="hidden sm:block relative">
                 <button 
-                  onClick={handleLogout}
-                  className="flex items-center gap-1 text-sm font-medium text-red-500 hover:text-red-600 transition-colors"
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  <LogOut size={18} />
-                  <span>Salir</span>
+                  Hola, <span className="font-bold">{getUserName()}</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`}><path d="m6 9 6 6 6-6"/></svg>
                 </button>
+                
+                <AnimatePresence>
+                  {isUserMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute right-0 mt-2 w-48 bg-background border border-border rounded-xl shadow-lg overflow-hidden py-1"
+                    >
+                      {isAdmin && (
+                        <Link 
+                          href="/admin" 
+                          onClick={() => setIsUserMenuOpen(false)}
+                          className="block w-full text-left px-4 py-2 text-sm font-bold text-primary hover:bg-secondary transition-colors"
+                        >
+                          Panel de Administración
+                        </Link>
+                      )}
+                      <button 
+                        onClick={() => {
+                          setIsUserMenuOpen(false);
+                          handleLogout();
+                        }}
+                        className="flex w-full items-center gap-2 px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-500/10 transition-colors"
+                      >
+                        <LogOut size={16} />
+                        Cerrar Sesión
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ) : (
               <Link href="/login" className="hidden sm:flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors">
