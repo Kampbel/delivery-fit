@@ -94,7 +94,7 @@ export default function AdminDashboard() {
   };
 
   const handleNotifyCustomer = (order: any) => {
-    const trackingLink = `http://localhost:3000/tracking?id=${order.id}`;
+    const trackingLink = `${window.location.origin}/tracking?id=${order.id}`;
     const message = `¡Hola ${order.customer}! 👋%0A%0ATu pedido ha sido verificado y está siendo preparado.%0A%0APuedes seguir el estado de tu delivery en tiempo real aquí:%0A${trackingLink}%0A%0A¡Gracias por elegir PoncesFit!`;
     const whatsappUrl = `https://wa.me/${order.phone}?text=${message}`;
     window.open(whatsappUrl, "_blank");
