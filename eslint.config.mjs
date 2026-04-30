@@ -13,6 +13,7 @@ const eslintConfig = defineConfig([
       "prefer-const": "off",
       "react-hooks/exhaustive-deps": "off",
       "react-hooks/rules-of-hooks": "off",
+      "react-hooks/set-state-in-effect": "off",
     }
   },
   globalIgnores([

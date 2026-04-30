@@ -66,9 +66,10 @@ export function Navbar() {
               <div className="hidden sm:block relative">
                 <button 
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors bg-secondary/80 py-1.5 px-3 rounded-full"
                 >
-                  Hola, <span className="font-bold">{getUserName()}</span>
+                  <User size={18} />
+                  <span className="font-bold">{getUserName()}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`}><path d="m6 9 6 6 6-6"/></svg>
                 </button>
                 
@@ -86,7 +87,7 @@ export function Navbar() {
                           onClick={() => setIsUserMenuOpen(false)}
                           className="block w-full text-left px-4 py-2 text-sm font-bold text-primary hover:bg-secondary transition-colors"
                         >
-                          Panel de Administración
+                          Panel
                         </Link>
                       )}
                       <button 
@@ -97,7 +98,7 @@ export function Navbar() {
                         className="flex w-full items-center gap-2 px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-500/10 transition-colors"
                       >
                         <LogOut size={16} />
-                        Cerrar Sesión
+                        Salir
                       </button>
                     </motion.div>
                   )}
